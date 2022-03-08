@@ -1,0 +1,39 @@
+﻿@model PlataformaBjj.Models.SubCategory
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2 class="text-white-50">Borrar Sub Categoria</h2>
+<br />
+<form method="post" asp-action="Delete">
+    <div class="backgroundWhite">
+        <input type="hidden" asp-for="Id" />
+        <fieldset disabled>
+            <div class="form-group row">
+                <div class="col-2">
+                    <label asp-for="Name" class="custom-label"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="Name" class="form-control" style="color: #495057;"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-2">
+                    <label asp-for="Category.Name" class="custom-label"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="Category.Name" class="form-control" style="color: #495057;" />
+                </div>
+            </div>
+        </fieldset>
+        <br />
+        <div class="form-group row">
+            <div class="col-5 offset-2">
+                <input type="hidden" asp-for="Id" />
+                <partial name="_DeleteAndBackToListButton" model="Model.Id" />
+            </div>
+        </div>
+    </div>
+</form>

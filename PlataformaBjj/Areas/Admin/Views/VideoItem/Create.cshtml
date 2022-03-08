@@ -1,0 +1,121 @@
+﻿@model PlataformaBjj.Models.ViewModels.VideoItemVM
+@using PlataformaBjj.Extensions
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2 class="text-white-50">Agregar Video</h2>
+<br />
+
+<form method="post" asp-action="Create" enctype="multipart/form-data">
+    <div class="backgroundWhite">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="VideoItem.Title" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="VideoItem.Title" class="form-control" />
+            </div>
+            <span asp-validation-for="VideoItem.Title" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="VideoItem.Description" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                @Html.TextAreaFor(m => m.VideoItem.Description)
+            </div>
+            <span asp-validation-for="VideoItem.Description" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="VideoItem.Image" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input type="file" name="files" multiple class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="VideoItem.URL" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="VideoItem.URL" class="form-control" />
+            </div>
+            <span asp-validation-for="VideoItem.URL" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="VideoItem.CategoryId" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <select asp-for="@Model.VideoItem.CategoryId" id="CategoryId" asp-items="Model.Category.ToSelectListItem(Model.VideoItem.CategoryId)" class="form-control"></select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="VideoItem.SubCategoryId" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <select asp-for="@Model.VideoItem.SubCategoryId" name="SubCategoryId" id="SubCategoryId" asp-items="@(new SelectList(string.Empty,"Id","Name"))" class="form-control"></select>
+            </div>
+        </div>
+        
+            <div class="form-group row">
+                <div class="col-2">
+                    <label asp-for="@Model.EmailNotification" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    <input style="margin-top:1rem; padding:1rem;" asp-for="@Model.EmailNotification" class="form-check" checked />
+                </div>
+            </div>
+        
+
+        <div class="form-group row">
+            <div class="col-5 offset-3">
+                <input type="submit" value="Crear" class="btn btn-danger" style="margin-top:8px;" /> |
+                <a asp-action="Index">Regresar</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: "lists",
+            menubar: 'file edit format'
+        });
+    </script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            getSubCategory();
+            $('#CategoryId').change(function () {
+                getSubCategory();
+            });
+        });
+        function getSubCategory() {
+            var url = '@Url.Content("~/")' + "Admin/SubCategories/GetSubCategory";
+            var ddlsoruce = '#CategoryId';
+            $.getJSON(url, { id: $(ddlsoruce).val() }, function (data) {
+                var items = '';
+                $('#SubCategoryId').empty();
+                $.each(data, function (i, subcategory) {
+                    items += "<option value='" + subcategory.value + "'>" + subcategory.text + "</option>";
+                });
+                $('#SubCategoryId').html(items);
+            })
+        }
+    </script>
+
+
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

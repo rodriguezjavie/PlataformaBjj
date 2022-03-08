@@ -1,0 +1,72 @@
+﻿@model ApplicationUser
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-white-50">Borrar usuario</h1>
+
+<div class="row" style="margin-top:2rem">
+    <div class="col-md-4 col-xs-12">
+        <div class="white-box">
+            <div class=" cardbox patient-profile">
+                @*<img src="@Url.Content("~/Content/UploadedFiles/"+Model.Patient.Photo)" class="img-responsive" alt="">*@
+            </div>
+            <div class="cardbox">
+                <div class="header">
+                    <h4 class="font-bold">INFORMACIÓN BÁSICA</h4>
+                </div>
+                <div class="body" style="margin-top:3rem">
+                    <div class="user-btm-box">
+                        <!-- .row -->
+                        <form method="post" asp-action="Delete">
+
+                            <div class="row text-center m-t-10">
+                                <div class="col-lg-6 col-md-12 col-sm-6 col-xs-12 b-r" style="display:flex">
+                                    <strong>Nombre:</strong>
+                                    <p style="margin-left:1rem">@Html.DisplayFor(model => model.Name)</p>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-sm-6 col-xs-12 b-r" style="display:flex">
+                                    <strong>Apellido:</strong>
+                                    <p style="margin-left:1rem">@Html.DisplayFor(model => model.LastName)</p>
+                                </div>
+
+                            </div>
+                            <!-- /.row -->
+                            <!-- .row -->
+                            <div class="row text-center m-t-10">
+                                <div class="col-lg-6 col-md-12 col-sm-6 col-xs-12 b-r" style="display:flex">
+                                    <strong>Teléfono:  </strong>
+                                    <p style="margin-left:1rem">
+                                        <a href="tel:@Html.DisplayFor(model => model.PhoneNumber)">
+                                            @Html.DisplayFor(model => model.PhoneNumber)
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- /.row -->
+                            <!-- .row -->
+                            <div class="row text-center m-t-10">
+                                <div class="col-lg-6 col-md-12 col-sm-6 col-xs-12 b-r" style="display:flex">
+                                    <strong>Email:</strong>
+                                    <p style="padding-left:2rem"><a href="mailto:@Html.DisplayFor(model=>model.Email)">  @Html.DisplayFor(model => model.Email)</a></p>
+                                </div>
+                            </div>
+                                        <input type="hidden" asp-for="Email" />
+ 
+                            <div class="row" style="margin-top:2rem">
+                                <div class="col-6">
+                                    <input type="submit" class="btn btn-danger" asp-route-id="@Model.Email" value="Borrar" />
+                                </div>
+                                <div class="col-6">
+                                    <a asp-action="Index" class="btn btn-secondary">Regresar</a>
+                                </div>
+                            </div>
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+

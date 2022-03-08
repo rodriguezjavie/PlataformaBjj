@@ -1,0 +1,141 @@
+﻿@using PlataformaBjj.Utility
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PlataformaBjj</title>
+    <link rel="stylesheet" type="text/css" href="~/assets/css/dataTables.css">
+    <link rel="stylesheet" href="~/assets/css/slick.min.css">
+    <link rel="stylesheet" href="~/assets/css/bootstrap-grid.css">
+    <link rel="stylesheet" href="~/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/assets/css/style.css">
+
+    <script src="https://kit.fontawesome.com/5d1420ebe9.js" crossorigin="anonymous"></script>
+
+
+</head>
+<body id="home">
+    <div class="preloader-cover">
+        <div id="cube-loader">
+            <div class="caption">
+                <div class="cube-loader">
+                    <div class="cube loader-1"></div>
+                    <div class="cube loader-2"></div>
+                    <div class="cube loader-4"></div>
+                    <div class="cube loader-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <header class="header">
+        <a href="#" class="nav-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </a>
+        <div class="top-panel">
+            <div class="container">
+                <div class="header-left">
+                    <ul class="header-cont">
+                        <li><i class="fa fa-phone" aria-hidden="true"></i><a href="tel:7773753815">7773753815</a></li>
+                        <li><i class="fa fa-clock-o" aria-hidden="true"></i>Lunes - Viernes: 8:00AM - 7:00PM | Sabados - Domingos: Cerrado</li>
+                    </ul>
+                </div>
+                <div class="header-right">
+                    <ul class="social-list">
+                        <li><a target="_blank" href="https://www.facebook.com"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        @*<li><a target="_blank" href="https://twitter.com"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                            <li><a target="_blank" href="https://www.youtube.com"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>*@
+                        <li><a target="_blank" href="https://www.instagram.com"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                    </ul>
+                    <ul class="header-cont" style="margin-left:2rem">
+                        <li><partial name="_LoginPartial" /></li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+        <div class="header-menu">
+            <div class="container">
+                <div class="header-logo">
+                    <a asp-area="customer" asp-action="Index" asp-controller="home" class="logo"><img src="~/assets/img/logoProv.jpg" alt="logo"></a>
+                </div>
+                <nav class="nav-menu">
+                    <ul class="nav-list">
+                        <li><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a></li>
+                        @if (User.IsInRole(SD.CustomerUser) || User.IsInRole(SD.ManagerUser) || User.IsInRole(SD.SuperUser))
+                        {
+                            <li class="dropdown">
+                                <a href="#">Modulos <i class="fa fa-caret-down"></i></a>
+                                <ul>
+                                    @if (User.IsInRole(SD.ManagerUser) || User.IsInRole(SD.SuperUser))
+                                    {
+                                        <li><a class="dropdown-item" asp-area="admin" asp-controller="Categories" asp-action="Index">Categorias</a></li>
+                                        <li><a class="dropdown-item" asp-area="admin" asp-controller="SubCategories" asp-action="Index">Sub Categorias</a></li>
+                                        <li><a class="dropdown-item" asp-area="admin" asp-controller="User" asp-action="Index">Usuarios</a></li>
+                                        <li><a class="dropdown-item" asp-area="customer" asp-controller="News" asp-action="Index">Noticias</a></li>
+
+                                    }
+
+                                    <li><a class="dropdown-item" asp-area="admin" asp-controller="VideoItem" asp-action="Index">Videos</a></li>
+                                    <li><a class="dropdown-item" asp-area="admin" asp-controller="User" asp-action="Details">Perfil</a></li>
+
+                                </ul>
+                            </li>
+                        }
+                        @*
+                            <li class="dropdown">
+                                <a href="#">Pages <i class="fa fa-caret-down"></i></a>
+                                <ul>
+                                    <li><a href="program.html">Program</a></li>
+                                    <li><a href="trainer.html">Trainer</a></li>
+                                </ul>
+                            </li>*@
+                        <li><a class="nav-link" href="/#noticias">Noticias y eventos</a></li>
+                        <li><a class="nav-link" href="/#horarios">Horarios</a></li>
+                        <li><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Contacto</a></li>
+
+
+
+                    </ul>
+
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - PlataformaBjj
+            <div class="col-12">
+                <ul class="social-list" style="justify-content:right">
+                    <li><a target="_blank" href="https://www.facebook.com"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    @*<li><a target="_blank" href="https://twitter.com"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a target="_blank" href="https://www.youtube.com"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>*@
+                    <li><a target="_blank" href="https://www.instagram.com"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <script src="~/assets/js/jquery-2.2.4.min.js"></script>
+    <script src="~/assets/js/slick.min.js"></script>
+    <script src="~/assets/js/rx-lazy.js"></script>
+    <script src="~/assets/js/parallax.min.js"></script>
+    <script src="~/assets/js/scripts.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=n94ifuzvl80pchikopiwgz2esrw8n28dwcywvpejlqrregfp"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script src="https://kit.fontawesome.com/998baed593.js" crossorigin="anonymous"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

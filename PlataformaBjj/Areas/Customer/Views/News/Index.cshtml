@@ -1,0 +1,59 @@
+﻿@model IEnumerable<NewsItem>
+@using PlataformaBjj.Utility
+@{
+    ViewData["Title"] = "Noticias";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- =============== HEADER-TITLE =============== -->
+@if (User.IsInRole(SD.ManagerUser) || User.IsInRole(SD.SuperUser))
+{
+    <p style="text-align:right">
+        <a class="btn btn-danger" style="margin-bottom:10px;" asp-action="Create">Agregar nueva</a>
+    </p>
+
+}
+
+<section class="s-header-title" style="background-image:url(/wwwroot/assets/img/bg-1-min.png);">
+    <div class="container">
+        <h1 class="title">Noticias</h1>
+
+    </div>
+</section>
+<!-- ============= HEADER-TITLE END ============= -->
+<!--===================== S-NEWS =====================-->
+<section class="s-news">
+    <div class="container">
+        
+            @foreach (var item in Model)
+            {<div class="row col-12">
+    <div class="post-item-cover">
+        <div class="post-header">
+            <div class="post-thumbnail">
+                <a asp-area="Customer" asp-action="Details" asp-route-id="@item.Id">
+                    <img src="@item.Image" alt="img">
+                </a>
+            </div>
+        </div>
+        <div class="post-content">
+            <div class="meta">
+                <span class="post-by"><i class="fa fa-user" aria-hidden="true"></i><a href="#">LegionBJJ</a></span>
+                <span class="post-date"><i class="fa fa-calendar" aria-hidden="true"></i>@item.UploadDate.ToShortDateString()</span>
+                <span class="post-category"><i class="fa fa-tag" aria-hidden="true"></i><a href="#"></a>@item.Type</span>
+            </div>
+            <h2 class="title"><a asp-area="Customer" asp-action="Details" asp-route-id="@item.Id">@item.Title</a></h2>
+            <div class="text">
+                <p>@Html.Raw(item.Description)</p>
+            </div>
+        </div>
+        <div class="post-footer">
+            <a asp-area="Customer" asp-action="Details" asp-route-id="@item.Id" class="btn btn-danger"><span>Continuar leyendo</span></a>
+        </div>
+    </div>
+        </div>
+    }
+
+        </div>
+   
+</section>
+<!--=================== S-NEWS END ===================-->

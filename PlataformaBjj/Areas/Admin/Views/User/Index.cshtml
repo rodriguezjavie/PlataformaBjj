@@ -1,0 +1,77 @@
+﻿@model IEnumerable<ApplicationUser>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-white-50">Lista de Usuarios</h1>
+
+<p style="text-align:right">
+    <a class=" btn" style="margin:2rem 0" asp-area="Identity" asp-page="/Account/register">Crear nuevo usuario</a>
+</p>
+<div id="userTable">
+    <table class="table" id="users" style="background-color: #f23849">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    Teléfono
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr style="background-color:black">
+                    <td>
+                        <a asp-area="Admin" asp-controller="User" asp-action="EditOtherUser" asp-route-email="@item.Email"> @Html.DisplayFor(u => item.Name)</a>
+                    </td>
+                    <th>
+                        @Html.DisplayFor(u => item.LastName)
+                    </th>
+                    <th>
+                        @Html.DisplayFor(u => item.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayFor(u => item.PhoneNumber)
+                    </th>
+                    <td>
+                        @if (item.LockoutEnd == null || item.LockoutEnd < DateTime.Now)
+                        {
+                            <a class="btn btn-success text-white"; border:1px solid green;" asp-action="Lock" asp-route-id="@item.Id">
+                                <i class="fa-solid fa-lock-open"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-danger text-white" asp-action="UnLock" asp-route-id="@item.Id">
+                                <i class="fa-solid fa-lock"></i>
+                            </a>
+                        }
+                    </td>
+                    <th><a class=" btn btn-danger text-white"asp-area="Admin" asp-controller="User" asp-action="Delete" asp-route-email="@item.Email"><i class="fa-solid fa-trash"></i></a></th></tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section Scripts{
+    <script src="https://kit.fontawesome.com/998baed593.js" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $('#users').DataTable();
+        });
+    </script>
+}
+
+

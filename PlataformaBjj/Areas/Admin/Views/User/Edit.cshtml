@@ -1,0 +1,44 @@
+﻿@model ApplicationUser
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+</br>
+<h1 class="text-white-50">Editar Perfil</h1>
+</br>
+<div class="row">
+    <div class="col-lg-10 col-md-8 col-sm-8 offset-1" style="margin-right:0.5rem;">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group row">
+                <label asp-for="Name" class="col-form-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="LastName" class="col-form-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="PhoneNumber" class="col-form-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" type="tel" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            </br>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group row">
+                <button type="submit" class="btn btn-danger" style="margin-right:1rem;">Actualizar</button>
+                <a class="btn btn-secondary" asp-action="Index">Regresar</a>
+                </div>
+
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

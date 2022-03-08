@@ -1,0 +1,62 @@
+﻿@model PlataformaBjj.Models.ViewModels.VideoItemVM
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2 class="text-white-50">Borrar Video</h2>
+<br />
+<form method="post">
+    <div class="backgroundWhiteBorder row">
+        <div class="col-8">
+            <input type="hidden" asp-for="VideoItem.Id" />
+            <fieldset disabled>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="VideoItem.Title" class="custom-label"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="VideoItem.Title" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="VideoItem.Description" class="custom-label"></label>
+                    </div>
+                    <div class="col-8">
+                        @Html.Raw(Model.VideoItem.Description)
+                    </div>
+                </div>
+                
+
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="VideoItem.CategoryId" class="custom-label"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="VideoItem.Category.Name" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="VideoItem.SubCategoryId" class="custom-label"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="VideoItem.SubCategory.Name" class="form-control" />
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="col-1"></div>
+        <div class="col-3">
+            <img src="@Model.VideoItem.Image" width="100%" style="border-radius:5px;border:1px solid #bbb9b9;" />
+        </div>
+        <div class="col-8">
+            <div class="col-8 offset-4">
+                <partial name="_DeleteAndBackToListButton" model="Model.VideoItem.Id" />
+            </div>
+        </div>
+    </div>
+</form>
+
