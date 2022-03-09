@@ -1,8 +1,66 @@
-﻿
+﻿@model NewsItem
+@using PlataformaBjj.Utility
+
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<!--===================== S-NEWS =====================-->
+<section class="s-news">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-9 blog-cover">
+                <div class="post-item-cover">
+                    <div class="post-header">
+                        <div class="post-thumbnail">
+                            <img src="@Model.Image" alt="img">
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <div class="meta">
+                            <span class="post-by"><i class="fa fa-user" aria-hidden="true"></i><a href="#">Legion BJJ</a></span>
+                            <span class="post-date"><i class="fa fa-calendar" aria-hidden="true"></i>@Model.UploadDate.ToShortDateString()</span>
+                            <span class="post-category"><i class="fa fa-tag" aria-hidden="true"></i><a href="#">@Model.Type</a></span>
+                        </div>
+                        <h2 class="title">@Model.Title</h2>
+                        <div class="text">
+                            <p>@Html.Raw(Model.Description)</p>
+                            <p></p>
+                            @*<blockquote>
+                                <p>Arcu bibendum at varius vel pharetra vel turpis nunc eget. Et leo duis ut diam quam nulla. Cras pulvinar mattis nunc sed blandit libero volutpat. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Amet consectetur adipiscing elit pellentesque.</p>
+                                <cite>By <a href="#">Kerry Ashman</a></cite>
+                            </blockquote>*@
+                            @*<p>Non odio euismod lacinia at quis. Auctor augue mauris augue neque gravida. Mauris commodo quis imperdiet massa tincidunt nunc pulvinar. In tellus integer feugiat scelerisque varius morbi enim. Fringilla ut morbi tincidunt augue interdum velit. Est velit egestas dui id ornare arcu odio. Amet mattis vulputate enim nulla aliquet porttitor lacus luctus accumsan. Vel elit scelerisque mauris pellentesque pulvinar pellentesque. Amet massa vitae tortor condimentum lacinia quis vel. Ut tellus elementum sagittis vitae et</p>*@
+                        </div>
+                    </div>
+                    <a style="margin-right:0.5rem;" class="btn btn-danger" asp-action="Index">Regresar</a>
+                    @if (User.IsInRole(SD.ManagerUser) || User.IsInRole(SD.SuperUser))
+                    {
+                        <a style="margin-right:0.5rem;" class="btn btn-success" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
+                        <a class="btn btn-secondary" asp-action="Delete" asp-route-id="@Model.Id">Borrar</a>
 
+
+                    }
+                   
+                </div>
+                
+        
+
+
+        </div>
+    </div>
+    </div>
+</section>
+                    @section Scripts{
+                        <script>
+                            tinymce.init({
+                                selector: 'textarea',
+                                plugins: "lists",
+                                toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist",
+                                menubar: 'file edit format',
+                                readonly: 1
+                            });</script>
+                        <script>tinymce.init({ selector: 'textarea' });</script>
+
+                    }
