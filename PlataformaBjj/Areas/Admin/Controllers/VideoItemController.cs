@@ -205,7 +205,7 @@ namespace PlataformaBjj.Areas.Admin.Controllers
             return View(VideoItemVM);
         }
 
-        //GET : Delete MenuItem
+        //GET : Delete 
         [Authorize(Roles = "Manager, SUser")]
         public async Task<IActionResult> Delete(int? id)
         {

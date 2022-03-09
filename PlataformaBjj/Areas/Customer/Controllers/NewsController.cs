@@ -120,5 +120,79 @@ namespace PlataformaBjj.Areas.Customer.Controllers
             }
             return View(NewsItem);
         }
+
+
+        [Authorize(Roles = "Manager, SUser")]
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditPOST(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(NewsItem);
+            }
+
+            //Work on the image saving section
+
+            string webRootPath = _hostingEnvironment.WebRootPath;
+            var files = HttpContext.Request.Form.Files;
+
+            var newsItemFromDb = await _context.NewsItems.FindAsync(NewsItem.Id);
+
+            if (files.Count > 0)
+            {
+                //New Image has been uploaded
+                var uploads = Path.Combine(webRootPath, "images");
+                var extension_new = Path.GetExtension(files[0].FileName);
+
+                //Delete the original file
+                var imagePath = Path.Combine(webRootPath, NewsItem.Image.TrimStart('\\'));
+
+                if (System.IO.File.Exists(imagePath))
+                {
+                    System.IO.File.Delete(imagePath);
+                }
+
+                //we will upload the new file
+                using (var filesStream = new FileStream(Path.Combine(uploads, NewsItem.Id + extension_new), FileMode.Create))
+                {
+                    files[0].CopyTo(filesStream);
+                }
+                newsItemFromDb.Image = @"\images\" + NewsItem.Id + extension_new;
+            }
+
+            newsItemFromDb.Title = NewsItem.Title;
+            newsItemFromDb.Description = NewsItem.Description;
+            //newsItemFromDb.IsActive = NewsItem.IsActive;
+            
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        //GET : Delete 
+        [Authorize(Roles = "Manager, SUser")]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            NewsItem = await _context.NewsItems.SingleOrDefaultAsync(m => m.Id == id);
+
+            if (NewsItem == null)
+            {
+                return NotFound();
+            }
+
+            return View(NewsItem);
+        }
     }
 }

@@ -14,7 +14,7 @@
 
 }
 
-<section class="s-header-title" style="background-image:url(../../../../wwwroot/assets/img/bg-1-min.png)">
+<section class="s-header-title">
     <div class="container news-background">
         <h1 class="title">Noticias</h1>
 
@@ -43,7 +43,7 @@
                         </div>
                         <h2 class="title"><a asp-area="Customer" asp-action="Details" asp-route-id="@item.Id">@item.Title</a></h2>
                         <div class="text">
-                            <p>@Html.Raw(item.Description)</p>
+                            <p style="color:white">@Html.Raw(item.Description)</p>
                         </div>
                     </div>
                     <div class="post-footer">
