@@ -30,7 +30,7 @@ namespace PlataformaBjj.Areas.Customer.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var news = await _context.NewsItems.ToListAsync(); 
+            var news = await _context.NewsItems.OrderByDescending(n=>n.UploadDate).ToListAsync(); 
             return View(news);
         }
 
@@ -194,5 +194,31 @@ namespace PlataformaBjj.Areas.Customer.Controllers
 
             return View(NewsItem);
         }
+
+        //POST Delete 
+        [Authorize(Roles = "Manager, SUser")]
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            string webRootPath = _hostingEnvironment.WebRootPath;
+            NewsItem newsItem = await _context.NewsItems.FindAsync(id);
+
+            if (newsItem != null)
+            {
+                var imagePath = Path.Combine(webRootPath, newsItem.Image.TrimStart('\\'));
+
+                if (System.IO.File.Exists(imagePath))
+                {
+                    System.IO.File.Delete(imagePath);
+                }
+                _context.NewsItems.Remove(newsItem);
+                await _context.SaveChangesAsync();
+
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

@@ -224,24 +224,24 @@ namespace PlataformaBjj.Areas.Admin.Controllers
             return View(VideoItemVM);
         }
 
-        //POST Delete MenuItem
+        //POST Delete 
         [Authorize(Roles = "Manager, SUser")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             string webRootPath = _hostingEnvironment.WebRootPath;
-            VideoItem menuItem = await _context.VideoItems.FindAsync(id);
+            VideoItem videoItem = await _context.VideoItems.FindAsync(id);
 
-            if (menuItem != null)
+            if (videoItem != null)
             {
-                var imagePath = Path.Combine(webRootPath, menuItem.Image.TrimStart('\\'));
+                var imagePath = Path.Combine(webRootPath, videoItem.Image.TrimStart('\\'));
 
                 if (System.IO.File.Exists(imagePath))
                 {
                     System.IO.File.Delete(imagePath);
                 }
-                _context.VideoItems.Remove(menuItem);
+                _context.VideoItems.Remove(videoItem);
                 await _context.SaveChangesAsync();
 
             }
