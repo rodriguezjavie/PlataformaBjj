@@ -18,14 +18,14 @@ namespace PlataformaBjj.Areas.Customer.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _hostingEnvironment;
         [BindProperty]
-        public NewsItem News { get; set; }
+        public NewsItem NewsItem { get; set; }
 
 
         public NewsController(ApplicationDbContext context, IWebHostEnvironment hostingEnvironment)
         {
             _context = context;
             _hostingEnvironment = hostingEnvironment;
-            News = new NewsItem();
+            NewsItem = new NewsItem();
         }
 
         public async Task<IActionResult> Index()
@@ -38,7 +38,7 @@ namespace PlataformaBjj.Areas.Customer.Controllers
         [Authorize(Roles = "Manager, SUser")]
         public IActionResult Create()
         {
-            return View(News);
+            return View(NewsItem);
         }
         [Authorize(Roles = "Manager, SUser")]
         [HttpPost, ActionName("Create")]
@@ -48,10 +48,10 @@ namespace PlataformaBjj.Areas.Customer.Controllers
 
             if (!ModelState.IsValid)
             {
-                return View(News);
+                return View(NewsItem);
             }
-            News.UploadDate = DateTime.Now;
-            _context.NewsItems.Add(News);
+            NewsItem.UploadDate = DateTime.Now;
+            _context.NewsItems.Add(NewsItem);
             await _context.SaveChangesAsync();
 
             //Work on the image saving section
@@ -59,7 +59,7 @@ namespace PlataformaBjj.Areas.Customer.Controllers
             string webRootPath = _hostingEnvironment.WebRootPath;
             var files = HttpContext.Request.Form.Files;
 
-            var newsItemFromDb = await _context.NewsItems.FindAsync(News.Id);
+            var newsItemFromDb = await _context.NewsItems.FindAsync(NewsItem.Id);
 
             if (files.Count > 0)
             {
@@ -67,18 +67,18 @@ namespace PlataformaBjj.Areas.Customer.Controllers
                 var uploads = Path.Combine(webRootPath, "images");
                 var extension = Path.GetExtension(files[0].FileName);
 
-                using (var filesStream = new FileStream(Path.Combine(uploads, News.Id + extension), FileMode.Create))
+                using (var filesStream = new FileStream(Path.Combine(uploads, NewsItem.Id + extension), FileMode.Create))
                 {
                     files[0].CopyTo(filesStream);
                 }
-                newsItemFromDb.Image = @"\images\" + News.Id + extension;
+                newsItemFromDb.Image = @"\images\" + NewsItem.Id + extension;
             }
             else
             {
                 //no file was uploaded, so use default
                 var uploads = Path.Combine(webRootPath, @"images\" + "default.jpg");
-                System.IO.File.Copy(uploads, webRootPath + @"\images\" + News.Id + ".png");
-                newsItemFromDb.Image = @"\images\" + News.Id + ".png";
+                System.IO.File.Copy(uploads, webRootPath + @"\images\" + NewsItem.Id + ".png");
+                newsItemFromDb.Image = @"\images\" + NewsItem.Id + ".png";
             }
 
             await _context.SaveChangesAsync();
@@ -94,14 +94,31 @@ namespace PlataformaBjj.Areas.Customer.Controllers
                 return NotFound();
             }
 
-            News = await _context.NewsItems.SingleOrDefaultAsync(m => m.Id == id);
+            NewsItem = await _context.NewsItems.SingleOrDefaultAsync(m => m.Id == id);
 
-            if (News == null)
+            if (NewsItem == null)
             {
                 return NotFound();
             }
 
-            return View(News);
+            return View(NewsItem);
+        }
+        //GET - EDIT
+        [Authorize(Roles = "Manager, SUser")]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            NewsItem = await _context.NewsItems.SingleOrDefaultAsync(m => m.Id == id);
+
+            if (NewsItem == null)
+            {
+                return NotFound();
+            }
+            return View(NewsItem);
         }
     }
 }

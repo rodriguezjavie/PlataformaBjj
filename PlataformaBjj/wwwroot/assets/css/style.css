@@ -5228,3 +5228,7 @@ select.form-control:focus::-ms-value {
    table label{
        color:white;
    }
+
+   .news-background{
+       background-image:url(/assets/img/bg-1-min.png);
+   }

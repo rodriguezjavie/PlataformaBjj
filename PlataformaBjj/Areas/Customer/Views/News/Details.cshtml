@@ -5,7 +5,12 @@
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<section class="s-header-title">
+    <div class="container news-background">
+        <h1 class="title">Noticias</h1>
 
+    </div>
+</section>
 <!--===================== S-NEWS =====================-->
 <section class="s-news">
     <div class="container">
@@ -25,7 +30,7 @@
                         </div>
                         <h2 class="title">@Model.Title</h2>
                         <div class="text">
-                            <p>@Html.Raw(Model.Description)</p>
+                            <p style="text-align:justify">@Html.Raw(Model.Description)</p>
                             <p></p>
                             @*<blockquote>
                                 <p>Arcu bibendum at varius vel pharetra vel turpis nunc eget. Et leo duis ut diam quam nulla. Cras pulvinar mattis nunc sed blandit libero volutpat. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Amet consectetur adipiscing elit pellentesque.</p>
