@@ -1,5 +1,9 @@
-﻿@model IEnumerable<NewsItem>
+﻿@model IEnumerable<PlataformaBjj.Models.NewsItem>
 @using PlataformaBjj.Utility
+@using PlataformaBjj.Utility
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
 @{
     ViewData["Title"] = "Noticias";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -56,6 +60,18 @@
         }
 
     </div>
-   
+    <div class="form-group" style="margin-top:10px;">
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page = page }),
+            new X.PagedList.Web.Common.PagedListRenderOptions
+            {
+                DisplayItemSliceAndTotal = false,
+                ContainerDivClasses = new[] { "navigation" },
+                LiElementClasses = new[] { "page-item" },
+                PageClasses = new[] { "page-link" }
+
+            })
+    </div>
+
+
 </section>
 <!--=================== S-NEWS END ===================-->

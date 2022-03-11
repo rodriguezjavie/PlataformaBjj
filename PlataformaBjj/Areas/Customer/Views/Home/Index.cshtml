@@ -375,7 +375,7 @@
                         </div>
                         <div class="post-content">
                             <div class="meta">
-                                <span class="post-date"><i class="fa fa-calendar" aria-hidden="true"></i>@item.UploadDate</span>
+                                <span class="post-date"><i class="fa fa-calendar" aria-hidden="true"></i>@item.UploadDate.ToShortDateString()</span>
                             </div>
                             <h3 class="title"><a asp-area="Customer" asp-action="Details" asp-controller="News" asp-route-id="@item.Id">@item.Title</a></h3>
                             <div class="text">
@@ -522,7 +522,7 @@
 
 <!-- ========= S-TRAINING-SCHEDULE END ========= -->
 <!-- ================== FOOTER ================== -->
-<section class="s-counter" style="background-image: url(assets/img/bg-2.jpg);">
+<section class="s-counter" style="background-image: url(assets/img/bjjFight.png);">
     <div class="mask"></div>
     <div class="container">
         <h2 class="title-decor">Jiujitsu <span>Brasileño</span></h2>

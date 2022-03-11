@@ -41,7 +41,9 @@ namespace PlataformaBjj
             services.AddRazorPages();
             services.ConfigureApplicationCookie(options =>
             options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Identity/Account/AccessDenied"));
-            
+            services.ConfigureApplicationCookie(options =>
+            options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Identity/Account/Login"));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

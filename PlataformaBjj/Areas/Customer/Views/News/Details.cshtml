@@ -40,7 +40,7 @@
                         </div>
                     </div>
                     <br/>
-                    <a style="margin-right:0.5rem;" class="btn btn-danger" asp-action="Index">Regresar</a>
+                    <a style="margin-right:0.5rem;" class="btn btn-danger" asp-action="Index">Todas las Noticias</a>
                     @if (User.IsInRole(SD.ManagerUser) || User.IsInRole(SD.SuperUser))
                     {
                         <a style="margin-right:0.5rem;" class="btn btn-success" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>

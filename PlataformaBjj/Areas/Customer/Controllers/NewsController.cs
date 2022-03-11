@@ -9,10 +9,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace PlataformaBjj.Areas.Customer.Controllers
 {
     [Area("Customer")]
+    
     public class NewsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -27,11 +29,16 @@ namespace PlataformaBjj.Areas.Customer.Controllers
             _hostingEnvironment = hostingEnvironment;
             NewsItem = new NewsItem();
         }
-
-        public async Task<IActionResult> Index()
+        [AllowAnonymous]
+        public IActionResult Index(int? page)
         {
-            var news = await _context.NewsItems.OrderByDescending(n=>n.UploadDate).ToListAsync(); 
-            return View(news);
+            var pageNumber = page ?? 1;
+            int pageSize = 2;
+            var newsItems = _context.NewsItems.OrderByDescending(n => n.UploadDate).ToPagedList(pageNumber, pageSize);
+            return View(newsItems);
+
+            //var news = await _context.NewsItems.OrderByDescending(n=>n.UploadDate).ToListAsync(); 
+            //return View(news);
         }
 
         //POST-Create
@@ -86,6 +93,7 @@ namespace PlataformaBjj.Areas.Customer.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [AllowAnonymous]
         //GET-DETAILS
         public async Task<IActionResult> Details(int? id)
         {
@@ -103,6 +111,7 @@ namespace PlataformaBjj.Areas.Customer.Controllers
 
             return View(NewsItem);
         }
+
         //GET - EDIT
         [Authorize(Roles = "Manager, SUser")]
         public async Task<IActionResult> Edit(int? id)

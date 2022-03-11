@@ -5172,8 +5172,8 @@ select.form-control:focus::-ms-value {
 .page-item.active .page-link {
     z-index: 1;
     color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: #dc3545;
+    border-color: #dc3545;
 }
 
 .page-item.disabled .page-link {
