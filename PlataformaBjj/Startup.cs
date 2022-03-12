@@ -35,6 +35,7 @@ namespace PlataformaBjj
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddScoped<IDbInitializer, DbInitializer>();
             services.AddSingleton<IEmailSender, EmailSender>();
             services.Configure<EmailOptions>(Configuration);
             services.AddControllersWithViews();
@@ -47,7 +48,7 @@ namespace PlataformaBjj
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDbInitializer dbInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -60,6 +61,7 @@ namespace PlataformaBjj
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            dbInitializer.Initialize();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
