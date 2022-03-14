@@ -19,5 +19,6 @@ namespace PlataformaBjj.Data
         public DbSet<VideoItem> VideoItems { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<NewsItem> NewsItems { get; set; }
+        public DbSet<Phrases> Phrases { get; set; }
     }
 }
