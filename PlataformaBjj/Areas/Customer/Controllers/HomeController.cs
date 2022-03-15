@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PlataformaBjj.Data;
 using PlataformaBjj.Models;
+using PlataformaBjj.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,8 +27,12 @@ namespace PlataformaBjj.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var news = await _context.NewsItems.OrderByDescending(n=>n.UploadDate).Take(2).ToListAsync();
-            return View(news);
+            var model = new IndexVM
+            {
+                News = await _context.NewsItems.OrderByDescending(n => n.UploadDate).Take(2).ToListAsync(),
+                Phrases = await _context.Phrases.ToListAsync()
+            };
+            return View(model);
         }
 
        
