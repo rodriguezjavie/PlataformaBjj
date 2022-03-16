@@ -58,7 +58,7 @@ namespace PlataformaBjj.Areas.Admin.Controllers
             // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
             [HttpPost]
             [ValidateAntiForgeryToken]
-            public async Task<IActionResult> Create([Bind("Id,Name")] UserType userType)
+            public async Task<IActionResult> Create( UserType userType)
             {
                 if (ModelState.IsValid)
                 {
@@ -90,7 +90,7 @@ namespace PlataformaBjj.Areas.Admin.Controllers
             // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
             [HttpPost]
             [ValidateAntiForgeryToken]
-            public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] UserType userType)
+            public async Task<IActionResult> Edit(int id, UserType userType)
             {
                 if (id != userType.Id)
                 {

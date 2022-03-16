@@ -12,7 +12,7 @@ namespace PlataformaBjj.Models
         public int Id { get; set; }
         [Required]
         [Display(Name = "Tipo de usuario")]
-        public string Type { get; set; }
+        public string Name { get; set; }
 
     }
 }

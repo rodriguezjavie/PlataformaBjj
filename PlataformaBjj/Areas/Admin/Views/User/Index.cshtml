@@ -8,7 +8,7 @@
 <h1 class="text-white-50">Lista de Usuarios</h1>
 
 <p style="text-align:right">
-    <a class=" btn" style="margin:2rem 0" asp-area="Identity" asp-page="/Account/register">Crear nuevo usuario</a>
+    <a class=" btn btn-danger" style="margin:2rem 0" asp-area="Identity" asp-page="/Account/register">Crear nuevo usuario</a>
 </p>
 <div id="userTable">
     <table class="table" id="users" style="background-color: #f23849">
@@ -26,6 +26,7 @@
                 <th>
                     Teléfono
                 </th>
+                <th>@Html.DisplayNameFor(model => model.UserType.Name)</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -46,10 +47,13 @@
                     <th>
                         @Html.DisplayFor(u => item.PhoneNumber)
                     </th>
+                    <th>
+                        @Html.DisplayFor(u => item.UserType.Name)
+                    </th>
                     <td>
                         @if (item.LockoutEnd == null || item.LockoutEnd < DateTime.Now)
                         {
-                            <a class="btn btn-success text-white"; border:1px solid green;" asp-action="Lock" asp-route-id="@item.Id">
+                            <a class="btn btn-success text-white" ; border:1px solid green;" asp-action="Lock" asp-route-id="@item.Id">
                                 <i class="fa-solid fa-lock-open"></i>
                             </a>
                         }
@@ -60,7 +64,8 @@
                             </a>
                         }
                     </td>
-                    <th><a class=" btn btn-danger text-white"asp-area="Admin" asp-controller="User" asp-action="Delete" asp-route-email="@item.Email"><i class="fa-solid fa-trash"></i></a></th></tr>
+                    <th><a class=" btn btn-danger text-white" asp-area="Admin" asp-controller="User" asp-action="Delete" asp-route-email="@item.Email"><i class="fa-solid fa-trash"></i></a></th>
+                </tr>
             }
         </tbody>
     </table>

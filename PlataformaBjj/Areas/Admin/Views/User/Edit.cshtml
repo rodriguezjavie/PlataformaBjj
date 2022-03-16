@@ -1,4 +1,8 @@
-﻿@model ApplicationUser
+﻿@model PlataformaBjj.Models.ViewModels.UserVM
+@using PlataformaBjj.Utility
+@using PlataformaBjj.Extensions
+
+
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,26 +16,33 @@
         <form asp-action="Edit" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group row">
-                <label asp-for="Name" class="col-form-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="ApplicationUser.Name" class="col-form-label"></label>
+                <input asp-for="ApplicationUser.Name" class="form-control" />
+                <span asp-validation-for="ApplicationUser.Name" class="text-danger"></span>
             </div>
             <div class="form-group row">
-                <label asp-for="LastName" class="col-form-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
+                <label asp-for="ApplicationUser.LastName" class="col-form-label"></label>
+                <input asp-for="ApplicationUser.LastName" class="form-control" />
+                <span asp-validation-for="ApplicationUser.LastName" class="text-danger"></span>
             </div>
             <div class="form-group row">
-                <label asp-for="PhoneNumber" class="col-form-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" type="tel" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                <label asp-for="ApplicationUser.PhoneNumber" class="col-form-label"></label>
+                <input asp-for="ApplicationUser.PhoneNumber" class="form-control" type="tel" />
+                <span asp-validation-for="ApplicationUser.PhoneNumber" class="text-danger"></span>
             </div>
+            @if (User.IsInRole(SD.ManagerUser) || User.IsInRole(SD.SuperUser))
+            {
+                <div class="form-group row">
+                    <label asp-for="ApplicationUser.UserTypeId" class="col-form-label"></label>
+                    <select id="ddlCategorylist" asp-for="ApplicationUser.UserTypeId" asp-items="Model.UserTypesList.ToSelectListItem(Model.ApplicationUser.UserTypeId)" class="form-control"></select>
+                </div>
+            }
             </br>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="ApplicationUser.Id" />
             <div class="form-group row">
                 <button type="submit" class="btn btn-danger" style="margin-right:1rem;">Actualizar</button>
                 <a class="btn btn-secondary" asp-action="Index">Regresar</a>
-                </div>
+            </div>
 
         </form>
     </div>

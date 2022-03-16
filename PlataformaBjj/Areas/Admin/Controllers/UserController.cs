@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PlataformaBjj.Data;
 using PlataformaBjj.Models;
+using PlataformaBjj.Models.ViewModels;
 using PlataformaBjj.Utility;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace PlataformaBjj.Areas.Admin.Controllers
         {
             var claimsIdentity = (ClaimsIdentity)this.User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-            var users = await _context.ApplicationUsers.Where(u => u.Id != claim.Value).ToListAsync();
+            var users = await _context.ApplicationUsers.Where(u => u.Id != claim.Value).Include(u=>u.UserType).ToListAsync();
             return View(users);
         }
         [Authorize]
@@ -43,7 +44,12 @@ namespace PlataformaBjj.Areas.Admin.Controllers
         {
             
             var user = await _context.ApplicationUsers.SingleOrDefaultAsync(u => u.Email == email);
-            return View("Edit",user);
+            var model = new UserVM
+            {
+                ApplicationUser = user,
+                UserTypesList = await _context.UserTypes.ToListAsync()
+            };
+            return View("Edit",model);
 
         }
         //GET-EDIT
@@ -61,16 +67,17 @@ namespace PlataformaBjj.Areas.Admin.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(ApplicationUser user)
+        public async Task<IActionResult> Edit(UserVM user)
         {
             if (user == null)
                 return NotFound();
-            var userInDb = await _context.ApplicationUsers.SingleOrDefaultAsync(u => u.Id == user.Id);
+            var userInDb = await _context.ApplicationUsers.SingleOrDefaultAsync(u => u.Id == user.ApplicationUser.Id);
             if (userInDb == null)
                 return NotFound();
-            userInDb.Name = user.Name;
-            userInDb.LastName = user.LastName;
-            userInDb.PhoneNumber = user.PhoneNumber;
+            userInDb.Name = user.ApplicationUser.Name;
+            userInDb.LastName = user.ApplicationUser.LastName;
+            userInDb.PhoneNumber = user.ApplicationUser.PhoneNumber;
+            userInDb.UserTypeId = user.ApplicationUser.UserTypeId;
             await _context.SaveChangesAsync();
             if (User.IsInRole(SD.CustomerUser))
                 return RedirectToAction(nameof(Details));

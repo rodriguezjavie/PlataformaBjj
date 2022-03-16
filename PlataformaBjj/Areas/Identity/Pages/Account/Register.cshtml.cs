@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -75,6 +76,12 @@ namespace PlataformaBjj.Areas.Identity.Pages.Account
             [Required]
             public string LastName { get; set; }
 
+            [Display(Name = "Tipo de Usuario")]
+            public int UserTypeId { get; set; }
+
+            [ForeignKey("UserTypeId")]
+            public UserType UserType { get; set; }
+
             [Required]
             [Display(Name="Teléfono")]
             public string PhoneNumber { get; set; }
@@ -101,7 +108,9 @@ namespace PlataformaBjj.Areas.Identity.Pages.Account
                     Email = Input.Email,
                     Name=Input.Name,
                     LastName=Input.LastName,
-                    PhoneNumber=Input.PhoneNumber
+                    PhoneNumber=Input.PhoneNumber,
+                    UserTypeId=1
+                    
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
