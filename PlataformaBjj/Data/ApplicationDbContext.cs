@@ -20,5 +20,6 @@ namespace PlataformaBjj.Data
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<NewsItem> NewsItems { get; set; }
         public DbSet<Phrases> Phrases { get; set; }
+        public DbSet<UserType> UserTypes { get; set; }
     }
 }

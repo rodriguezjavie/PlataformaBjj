@@ -1,0 +1,25 @@
+﻿@model PlataformaBjj.Models.UserType
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-white-50">Detalles categoria</h2>
+
+<div>
+    <h4>Categoria</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-danger" asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
+    <a asp-action="Index">Regresar</a>
+</div>
