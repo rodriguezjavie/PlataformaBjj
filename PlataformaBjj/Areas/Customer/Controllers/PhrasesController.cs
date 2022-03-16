@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,10 +16,13 @@ namespace PlataformaBjj.Areas.Customer.Controllers
     public class PhrasesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public PhrasesController(ApplicationDbContext context)
+
+        public PhrasesController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            _hostingEnvironment = hostEnvironment;
         }
 
         // GET: Customer/Phrases
@@ -57,13 +62,43 @@ namespace PlataformaBjj.Areas.Customer.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Phrases phrases)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Add(phrases);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View(phrases);
             }
-            return View(phrases);
+            _context.Add(phrases);
+            await _context.SaveChangesAsync();
+
+            //Work on the image saving section
+
+            string webRootPath = _hostingEnvironment.WebRootPath;
+            var files = HttpContext.Request.Form.Files;
+
+            var phraseItemFromDb = await _context.Phrases.FindAsync(phrases.Id);
+
+            if (files.Count > 0)
+            {
+                //files has been uploaded
+                var uploads = Path.Combine(webRootPath, "imgPhrases");
+                var extension = Path.GetExtension(files[0].FileName);
+
+                using (var filesStream = new FileStream(Path.Combine(uploads, phrases.Id + extension), FileMode.Create))
+                {
+                    files[0].CopyTo(filesStream);
+                }
+                phraseItemFromDb.Image = @"\imgPhrases\" + phrases.Id + extension;
+            }
+            else
+            {
+                //no file was uploaded, so use default
+                var uploads = Path.Combine(webRootPath, @"images\" + "default.jpg");
+                System.IO.File.Copy(uploads, webRootPath + @"\imgPhrases\" + phrases.Id + ".png");
+                phraseItemFromDb.Image = @"\imgPhrases\" + phrases.Id + ".png";
+            }
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Customer/Phrases/Edit/5
@@ -87,34 +122,52 @@ namespace PlataformaBjj.Areas.Customer.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Phrases phrases)
+        public async Task<IActionResult> Edit(int? id, Phrases phrases)
         {
-            if (id != phrases.Id)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(phrases);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PhrasesExists(phrases.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return View(phrases);
             }
-            return View(phrases);
+
+            //Work on the image saving section
+
+            string webRootPath = _hostingEnvironment.WebRootPath;
+            var files = HttpContext.Request.Form.Files;
+
+            var phraseItemFromDb = await _context.Phrases.FindAsync(phrases.Id);
+
+            if (files.Count > 0)
+            {
+                //New Image has been uploaded
+                var uploads = Path.Combine(webRootPath, "imgPhrases");
+                var extension_new = Path.GetExtension(files[0].FileName);
+
+                //Delete the original file
+                var imagePath = Path.Combine(webRootPath, phraseItemFromDb.Image.TrimStart('\\'));
+
+                if (System.IO.File.Exists(imagePath))
+                {
+                    System.IO.File.Delete(imagePath);
+                }
+
+                //we will upload the new file
+                using (var filesStream = new FileStream(Path.Combine(uploads, phrases.Id + extension_new), FileMode.Create))
+                {
+                    files[0].CopyTo(filesStream);
+                }
+                phraseItemFromDb.Image = @"\imgPhrases\" + phrases.Id + extension_new;
+            }
+
+            phraseItemFromDb.Author = phrases.Author;
+            phraseItemFromDb.Phrase = phrases.Phrase;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Customer/Phrases/Delete/5
