@@ -10,6 +10,8 @@ namespace PlataformaBjj.Models
     {
         public int Id { get; set; }
 
+        [Display(Name ="Dirección de correo")]
+        public string EmailAddress { get; set; }
         [Display(Name = "Titulo del correo")]
         public string EmailSubject { get; set; }
 

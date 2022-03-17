@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PlataformaBjj.Data;
 using System;
 using System.Collections.Generic;
@@ -22,9 +23,10 @@ namespace PlataformaBjj.Areas.Admin.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var emails = _context.Emails.ToListAsync();
+            return View(emails);
         }
 
         //GET-SendEmailToAll

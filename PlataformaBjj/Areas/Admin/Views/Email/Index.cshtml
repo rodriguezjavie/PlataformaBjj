@@ -1,8 +1,37 @@
-﻿
+﻿@model IEnumerable<Email>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Lista de Templates</h1>
+<p style="text-align:right">
+    <a class="btn btn-danger" style="margin-bottom:1rem;" asp-action="Create">Crear nuevo correo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr style="background-color:#c82938">
+            <th>
+                @Html.DisplayNameFor(model => model.EmailSubject)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmailSubject)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Borrar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
 

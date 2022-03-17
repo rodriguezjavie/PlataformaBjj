@@ -21,5 +21,6 @@ namespace PlataformaBjj.Data
         public DbSet<NewsItem> NewsItems { get; set; }
         public DbSet<Phrases> Phrases { get; set; }
         public DbSet<UserType> UserTypes { get; set; }
+        public DbSet<Email> Emails { get; set; }
     }
 }
