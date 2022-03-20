@@ -1,0 +1,43 @@
+﻿@model Email
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2 class="text-white-50">Borrar Email</h2>
+<br />
+
+<form method="post" asp-action="Delete" enctype="multipart/form-data">
+    <div class="backgroundWhite">
+        <fieldset disabled>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group row">
+                <div class="col-2">
+                    <label asp-for="EmailSubject" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="EmailSubject" class="form-control" />
+                </div>
+                <span asp-validation-for="EmailSubject" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-2">
+                    <label asp-for="TemplateKey" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    @Html.Raw(Model.TemplateKey)
+                </div>
+                <span asp-validation-for="TemplateKey" class="text-danger"></span>
+            </div>
+            </fieldset>
+
+            <div class="form-group row">
+                <div class="col-5 offset-3">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="submit" value="Borrar" class="btn btn-danger" style="margin-top:8px;" /> |
+                    <a asp-action="Index">Regresar</a>
+                </div>
+            </div>
+    </div>
+</form>

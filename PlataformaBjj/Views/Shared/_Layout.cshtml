@@ -65,6 +65,8 @@
                 <nav class="nav-menu">
                     <ul class="nav-list">
                         <li><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a></li>
+                      
+
                         @if (User.IsInRole(SD.CustomerUser) || User.IsInRole(SD.ManagerUser) || User.IsInRole(SD.SuperUser))
                         {
                             <li class="dropdown">
@@ -78,6 +80,7 @@
                                         <li><a class="dropdown-item" asp-area="admin" asp-controller="User" asp-action="Index">Usuarios</a></li>
                                         <li><a class="dropdown-item" asp-area="customer" asp-controller="News" asp-action="Index">Noticias</a></li>
                                         <li><a class="dropdown-item" asp-area="customer" asp-controller="Phrases" asp-action="Index">Frases</a></li>
+                                        <li><a class="dropdown-item" asp-area="admin" asp-controller="Email" asp-action="Index">Emails</a></li>
 
                                     }
 
@@ -88,13 +91,13 @@
                             </li>
                         }
                         @*
-                            <li class="dropdown">
-                                <a href="#">Pages <i class="fa fa-caret-down"></i></a>
-                                <ul>
-                                    <li><a href="program.html">Program</a></li>
-                                    <li><a href="trainer.html">Trainer</a></li>
-                                </ul>
-                            </li>*@
+        <li class="dropdown">
+            <a href="#">Pages <i class="fa fa-caret-down"></i></a>
+            <ul>
+                <li><a href="program.html">Program</a></li>
+                <li><a href="trainer.html">Trainer</a></li>
+            </ul>
+        </li>*@
                         <li><a class="nav-link" href="/#noticias">Noticias y eventos</a></li>
                         <li><a class="nav-link" href="/#horarios">Horarios</a></li>
                         <li><a class="nav-link" href="/#contacto">Contacto</a></li>

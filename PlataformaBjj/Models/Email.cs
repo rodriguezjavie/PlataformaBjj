@@ -17,5 +17,8 @@ namespace PlataformaBjj.Models
 
         [Display(Name = "Mensaje")]
         public string EmailMessage { get; set; }
+
+        [Display(Name ="Teplate Key")]
+        public string TemplateKey { get; set; }
     }
 }

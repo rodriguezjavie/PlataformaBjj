@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Email>
+﻿@model IEnumerable<PlataformaBjj.Models.Email>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,6 +8,8 @@
 <p style="text-align:right">
     <a class="btn btn-danger" style="margin-bottom:1rem;" asp-action="Create">Crear nuevo correo</a>
 </p>
+<a  class="btn btn-secondary" style="margin-bottom:2rem" asp-action="SendEmail">Enviar Correo</a>
+<br/>
 <table class="table">
     <thead>
         <tr style="background-color:#c82938">
@@ -27,6 +29,7 @@
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
+                    <a asp-action="SendTemplate" asp-route-id="@item.Id">Enviar Correo</a> |
                     <a asp-action="Delete" asp-route-id="@item.Id">Borrar</a>
                 </td>
             </tr>

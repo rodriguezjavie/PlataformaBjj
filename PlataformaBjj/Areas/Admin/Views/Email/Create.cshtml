@@ -1,0 +1,52 @@
+﻿@model Email
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2 class="text-white-50">Agregar Email</h2>
+<br />
+
+<form method="post" asp-action="Create" enctype="multipart/form-data">
+    <div class="backgroundWhite">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="EmailSubject" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="EmailSubject" class="form-control" />
+            </div>
+            <span asp-validation-for="EmailSubject" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="TemplateKey" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="TemplateKey" class="form-control" />
+            </div>
+            <span asp-validation-for="TemplateKey" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group row">
+            <div class="col-5 offset-3">
+                <input type="submit" value="Crear" class="btn btn-danger" style="margin-top:8px;" /> |
+                <a asp-action="Index">Regresar</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: "lists",
+            menubar: 'file edit format'
+        });
+    </script>
+}
+

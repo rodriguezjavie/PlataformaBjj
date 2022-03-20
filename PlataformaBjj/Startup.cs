@@ -37,6 +37,7 @@ namespace PlataformaBjj
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddScoped<IDbInitializer, DbInitializer>();
             services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddSingleton<ITemplateSender, EmailSender>();
             services.Configure<EmailOptions>(Configuration);
             services.AddControllersWithViews();
             services.AddRazorPages();
