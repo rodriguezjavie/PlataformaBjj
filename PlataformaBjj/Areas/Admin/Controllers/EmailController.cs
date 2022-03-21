@@ -165,8 +165,17 @@ namespace PlataformaBjj.Areas.Admin.Controllers
             }
             if (EmailVM.Students)
             {
-                var students = allUsers.Select(u => u.UserType.Id==1);
-                foreach (var user in allUsers)
+                var students = await _context.ApplicationUsers.Where(u => u.UserTypeId == 1).ToListAsync();
+                foreach (var user in students)
+                {
+                    await _emailSender.SendEmailAsync(user.Email, EmailVM.Email.EmailSubject,
+                        EmailVM.Email.EmailMessage);
+                }
+            }
+            if (EmailVM.Profesors)
+            {
+                var profesors = await _context.ApplicationUsers.Where(u => u.UserTypeId == 2).ToListAsync();
+                foreach (var user in profesors)
                 {
                     await _emailSender.SendEmailAsync(user.Email, EmailVM.Email.EmailSubject,
                         EmailVM.Email.EmailMessage);
@@ -217,6 +226,14 @@ namespace PlataformaBjj.Areas.Admin.Controllers
             {
                 var students = await _context.ApplicationUsers.Where(u => u.UserTypeId == 1).ToListAsync();
                 foreach (var user in students)
+                {
+                    await _templateSender.SendTemplateAsync(user.Email, EmailVM.Email.TemplateKey);
+                }
+            }
+            if (EmailVM.Profesors)
+            {
+                var profesors = await _context.ApplicationUsers.Where(u => u.UserTypeId == 2).ToListAsync();
+                foreach (var user in profesors)
                 {
                     await _templateSender.SendTemplateAsync(user.Email, EmailVM.Email.TemplateKey);
                 }
