@@ -22,11 +22,11 @@ namespace PlataformaBjj.Services
         {
             return Excecute(Options.SendGridKey, subject, message, email);
         }
-        public Task SendTemplateAsync(string email, string templateKey)
+        public Task SendTemplateAsync(string email, string templateKey, string name)
         {
-            return ExcecuteTemplate(Options.SendGridKey, email, templateKey);
+            return ExcecuteTemplate(Options.SendGridKey, email, templateKey,name);
         }
-        private Task ExcecuteTemplate(string sendGridKey,  string email, string templateKey)
+        private Task ExcecuteTemplate(string sendGridKey,  string email, string templateKey, string _name)
         {
             var client = new SendGridClient(sendGridKey);
           
@@ -37,7 +37,7 @@ namespace PlataformaBjj.Services
             msg.SetTemplateId(templateKey);
             msg.SetTemplateData(new
             {
-                name = "LegionBJJ",
+                name = _name,
                 url = "https://localhost.com",
 
             });

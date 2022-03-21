@@ -219,7 +219,7 @@ namespace PlataformaBjj.Areas.Admin.Controllers
             {
                 foreach (var user in allUsers)
                 {
-                    await _templateSender.SendTemplateAsync(user.Email,EmailVM.Email.TemplateKey);
+                    await _templateSender.SendTemplateAsync(user.Email,EmailVM.Email.TemplateKey,user.Name);
                 }
             }
             if (EmailVM.Students)
@@ -227,7 +227,7 @@ namespace PlataformaBjj.Areas.Admin.Controllers
                 var students = await _context.ApplicationUsers.Where(u => u.UserTypeId == 1).ToListAsync();
                 foreach (var user in students)
                 {
-                    await _templateSender.SendTemplateAsync(user.Email, EmailVM.Email.TemplateKey);
+                    await _templateSender.SendTemplateAsync(user.Email, EmailVM.Email.TemplateKey,user.Name);
                 }
             }
             if (EmailVM.Profesors)
@@ -235,12 +235,12 @@ namespace PlataformaBjj.Areas.Admin.Controllers
                 var profesors = await _context.ApplicationUsers.Where(u => u.UserTypeId == 2).ToListAsync();
                 foreach (var user in profesors)
                 {
-                    await _templateSender.SendTemplateAsync(user.Email, EmailVM.Email.TemplateKey);
+                    await _templateSender.SendTemplateAsync(user.Email, EmailVM.Email.TemplateKey,user.Name);
                 }
             }
             else
             {
-                await _templateSender.SendTemplateAsync(EmailVM.Email.EmailAddress, EmailVM.Email.TemplateKey);
+                await _templateSender.SendTemplateAsync(EmailVM.Email.EmailAddress, EmailVM.Email.TemplateKey,EmailVM.Email.EmailAddress);
             }
             return RedirectToAction(nameof(Index));
         }

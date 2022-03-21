@@ -7,7 +7,7 @@ namespace PlataformaBjj.Services
 {
     public interface ITemplateSender
     {
-        Task SendTemplateAsync(string email, string templateKey);
+        Task SendTemplateAsync(string email, string templateKey,string name);
 
     }
 }
