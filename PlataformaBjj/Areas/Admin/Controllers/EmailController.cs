@@ -182,6 +182,7 @@ namespace PlataformaBjj.Areas.Admin.Controllers
         }
         //GET-SendTemplate
         public async Task<IActionResult> SendTemplate(int id)
+        
         {
             
 
@@ -214,7 +215,7 @@ namespace PlataformaBjj.Areas.Admin.Controllers
             }
             if (EmailVM.Students)
             {
-                var students = allUsers.Where(u => u.UserType.Id == 1);
+                var students = await _context.ApplicationUsers.Where(u => u.UserTypeId == 1).ToListAsync();
                 foreach (var user in students)
                 {
                     await _templateSender.SendTemplateAsync(user.Email, EmailVM.Email.TemplateKey);
