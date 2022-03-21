@@ -22,14 +22,14 @@ namespace PlataformaBjj.Services
         {
             return Excecute(Options.SendGridKey, subject, message, email);
         }
-        public Task SendTemplateAsync(string email, string templateKey, string name)
+        public Task SendTemplateAsync(string email, string templateKey, string name, string url)
         {
-            return ExcecuteTemplate(Options.SendGridKey, email, templateKey,name);
+            return ExcecuteTemplate(Options.SendGridKey, email, templateKey, name, url);
         }
-        private Task ExcecuteTemplate(string sendGridKey,  string email, string templateKey, string _name)
+        private Task ExcecuteTemplate(string sendGridKey, string email, string templateKey, string _name, string _url)
         {
             var client = new SendGridClient(sendGridKey);
-          
+
             var msg = new SendGridMessage()
             {
                 From = new EmailAddress("j.rodriguez@gooddata.com.mx", "LegionBjj"),
@@ -38,7 +38,7 @@ namespace PlataformaBjj.Services
             msg.SetTemplateData(new
             {
                 name = _name,
-                url = "https://localhost.com",
+                url = _url,
 
             });
             msg.AddTo(new EmailAddress(email));
@@ -57,28 +57,13 @@ namespace PlataformaBjj.Services
         private Task Excecute(string sendGridKey, string subject, string message, string email)
         {
             var client = new SendGridClient(sendGridKey);
-            //var msg = new SendGridMessage()
-            //{
-            //    From = new EmailAddress("j.rodriguez@gooddata.com.mx", "LegionBjj"),
-            //    Subject = subject,
-            //    PlainTextContent = message,
-            //    HtmlContent = message
-            //};
             var msg = new SendGridMessage()
             {
                 From = new EmailAddress("j.rodriguez@gooddata.com.mx", "LegionBjj"),
-                //Subject = subject,
-                //PlainTextContent = message,
-                //HtmlContent = message
+                Subject = subject,
+                PlainTextContent = message,
+                HtmlContent = message
             };
-            msg.SetTemplateId("d-62a08a86084d4760ba5fdda78f7f474d");
-            msg.SetTemplateData(new
-            {
-                name = "LegionBJJ",
-                url = "https://localhost.com",
-                subject="TEst12345"
-
-            });
             msg.AddTo(new EmailAddress(email));
             try
             {
@@ -87,7 +72,7 @@ namespace PlataformaBjj.Services
             catch (Exception ex)
             {
 
-                
+
             }
             return null;
         }
