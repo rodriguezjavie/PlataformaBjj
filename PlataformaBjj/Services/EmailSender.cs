@@ -22,11 +22,11 @@ namespace PlataformaBjj.Services
         {
             return Excecute(Options.SendGridKey, subject, message, email);
         }
-        public Task SendTemplateAsync(string email, string templateKey, string name, string url)
+        public Task SendTemplateAsync(string email, string templateKey, string name)
         {
-            return ExcecuteTemplate(Options.SendGridKey, email, templateKey, name, url);
+            return ExcecuteTemplate(Options.SendGridKey, email, templateKey, name);
         }
-        private Task ExcecuteTemplate(string sendGridKey, string email, string templateKey, string _name, string _url)
+        private Task ExcecuteTemplate(string sendGridKey, string email, string templateKey, string _name )
         {
             var client = new SendGridClient(sendGridKey);
 
@@ -38,7 +38,6 @@ namespace PlataformaBjj.Services
             msg.SetTemplateData(new
             {
                 name = _name,
-                url = _url,
 
             });
             msg.AddTo(new EmailAddress(email));
